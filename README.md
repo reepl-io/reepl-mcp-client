@@ -145,6 +145,38 @@ Once connected, Claude has access to these Reepl tools:
 - Review performance
 - Example: *"Show me my last 10 published posts"*
 
+**`get_scheduled_posts`** - View posts queued for future publishing
+- Shows every workspace member's scheduled posts on team plans, just your own if solo
+- Filter to one teammate with a `member_user_id` from `list_workspace_members`
+- Example: *"What do I have scheduled for this week?"*
+
+**`delete_scheduled_post`** - Cancel a scheduled or failed post
+- Works on posts with status scheduled, failed, or pending_approval
+- Published posts can't be removed this way
+- Example: *"Cancel the post I scheduled about the product launch"*
+
+**`publish_now`** - Publish a scheduled post immediately
+- Reschedules a queued post to publish within a few minutes
+- Only works on posts that are still scheduled
+- Example: *"Publish my scheduled AI post right now instead of waiting"*
+
+**`schedule_draft`** - Turn a saved draft into a scheduled post
+- Fetches the draft's content and creates a new scheduled post from it
+- The original draft stays untouched
+- Example: *"Schedule my AI draft for tomorrow at 9 AM"*
+
+### 💬 LinkedIn Engagement
+
+**`read_linkedin_post`** - Read any public LinkedIn post by URL
+- Pulls author, post text, and like/comment counts — works on any public post, not just yours
+- Returns a `urn` you can pass to `add_comment_to_post` to reply to it
+- Example: *"Summarize this LinkedIn post: [url]"*
+
+**`add_comment_to_post`** - Comment on a LinkedIn post
+- Works on your own published posts or any public post (via the `urn` from `read_linkedin_post`)
+- Posts under your real LinkedIn identity — always confirm the comment text before it's sent
+- Example: *"Draft a thoughtful reply to this post and show it to me before posting"*
+
 ### 👤 User Profile
 
 **`get_user_profile`** - Access your Reepl profile
@@ -152,6 +184,57 @@ Once connected, Claude has access to these Reepl tools:
 - Check subscription status
 - Monitor usage and credits
 - Example: *"What's my Reepl account status?"*
+
+### 🎙️ Voice & Writing Style
+
+**`get_voice_profile`** - View your learned writing voice
+- Patterns learned from your published posts: hook styles, tone, vocabulary preferences
+- Includes your own manual instructions plus positioning (audience, angle, storytelling style)
+- Example: *"What does my voice profile currently say about my tone?"*
+
+**`update_voice_profile`** - Refine your voice profile
+- Update your own instructions, or the AI-learned patterns (if you haven't locked auto-updates)
+- Used after analyzing your published posts to keep the profile current
+- Example: *"Update my voice profile based on my last 10 posts"*
+
+**`get_writing_style`** - View trained per-surface writing styles
+- Separate style summaries for LinkedIn posts, comments, and messages
+- More specific than the voice profile, which is a single overall profile
+- Example: *"What's my trained writing style for comments?"*
+
+**`train_writing_style`** - Retrain a writing-style facet from your content
+- Synthesizes your actual posts (needs 20+) or comments (needs 10+) into a style summary
+- Costs credits, requires Pro+, and overwrites the previous synthesis — confirm before calling
+- Example: *"Retrain my writing style from my recent posts"*
+
+### 🏢 Workspace & Team
+
+**`list_workspaces`** - See which Reepl workspaces you belong to
+- Shows your role in each and which one is your default
+- Most users have just one personal workspace
+- Example: *"What workspaces do I have access to?"*
+
+**`set_default_workspace`** - Switch your active workspace
+- All tools act in this workspace by default afterward, including credit usage on team plans
+- Example: *"Switch me to the Acme Corp workspace"*
+
+**`get_workspace_context`** - Read the workspace's brand context
+- Company name, one-liner, industry, products, and content pillars, plus your personal role/bio in that workspace
+- This is the positioning Reepl's AI uses to personalize content — good to read before writing
+- Example: *"Pull up our brand context before drafting this post"*
+
+**`get_audience_profiles`** - View the workspace's saved target audiences
+- Each profile defines job titles, industries, locations, pain points, and goals
+- Example: *"Who are our saved ICPs for this workspace?"*
+
+**`list_workspace_members`** - List everyone in a workspace
+- Includes each member's role, status, and LinkedIn connection state
+- Pass a member's `user_id` to `get_scheduled_posts`/`get_published_posts` to see their posts
+- Example: *"Who's on our team workspace and are they connected to LinkedIn?"*
+
+**`get_workspace_posts`** - View posts across the whole team at once
+- Every status (scheduled and published), annotated with each post's author
+- Example: *"Show me everything the team has posted or scheduled this month"*
 
 ### 👥 Contacts & Lists
 
@@ -165,6 +248,14 @@ Once connected, Claude has access to these Reepl tools:
 - Organize contacts by category
 - Manage segmented groups
 - Example: *"What contact lists do I have?"*
+
+**`get_list_contacts`** - View contacts in a specific list
+- Use `get_lists` first to find the list ID
+- Example: *"Show me everyone in my 'Warm Leads' list"*
+
+**`add_contact_to_list`** - Add a contact to a list
+- Use `get_contacts` and `get_lists` to find the contact and list IDs
+- Example: *"Add this contact to my 'Warm Leads' list"*
 
 ### 📚 Collections & Templates
 
@@ -182,6 +273,124 @@ Once connected, Claude has access to these Reepl tools:
 - Use proven content frameworks
 - Speed up content creation
 - Example: *"Show me my LinkedIn post templates"*
+
+### 🎨 Carousels
+
+**`generate_carousel_content`** - AI-generate carousel slide content
+- Give it a topic, article URL, or YouTube URL — get back slide headlines and body text
+- Feed the result into `create_carousel_draft`
+- Example: *"Generate a carousel about the 5 biggest AI trends this year"*
+
+**`list_carousel_drafts`** - List your saved carousel drafts
+- Supports search and pagination
+- Example: *"Show me my saved carousels"*
+
+**`get_carousel_draft`** - Fetch a single carousel draft
+- Returns all slide content, theme, and styling by draft ID
+- Example: *"Open my carousel about onboarding tips"*
+
+**`create_carousel_draft`** - Save a new carousel draft
+- Pass slides from `generate_carousel_content` or your own content
+- Reuse a saved template via a `template_id` from `list_carousel_templates` to apply its theme, colors, and fonts automatically
+- Example: *"Create a carousel from this content using my 'Case Study' template"*
+
+**`update_carousel_draft`** - Edit an existing carousel draft
+- Change the title, slides, theme, or font sizes — only the fields you specify are changed
+- Example: *"Update slide 3 of my carousel to mention the new pricing"*
+
+**`delete_carousel_draft`** - Permanently delete a carousel draft
+- Cannot be undone
+- Example: *"Delete my old product-launch carousel draft"*
+
+**`list_carousel_templates`** - View your saved carousel templates
+- Full reusable designs (theme, colors, fonts, layout) — different from post templates (`get_templates`)
+- Example: *"What carousel templates do I have saved?"*
+
+### 🖼️ Image Generation
+
+**`generate_image`** - Generate an AI image for a post
+- Uses your linked Gemini API key; returns a URL usable in `publish_to_linkedin` or `schedule_post`
+- Always show the image for approval before publishing
+- Example: *"Generate an image for this post about remote work"*
+
+### 🐦 Twitter/X
+
+**`twitter_create_post`** - Publish or schedule a Twitter/X post or thread
+- Omitting `scheduledFor` publishes immediately — always confirm before publishing without a schedule
+- Content must be pre-split into tweet-sized (280 char) chunks; requires Twitter connected + a paid plan
+- Example: *"Schedule this thread for X tomorrow at 10 AM"*
+
+**`twitter_get_posts`** - View your Twitter/X posts
+- Filter by status: published, scheduled, or failed
+- Example: *"Show me my scheduled tweets"*
+
+**`twitter_get_drafts`** - View your Twitter/X drafts
+- Example: *"What Twitter drafts do I have saved?"*
+
+**`twitter_create_draft`** - Save a Twitter/X post as a draft
+- For threads, provide the tweets array
+- Example: *"Save this as a Twitter draft, don't post it yet"*
+
+**`twitter_update_draft`** - Edit a Twitter/X draft
+- Example: *"Update my Twitter draft to shorten the second tweet"*
+
+**`twitter_delete_draft`** - Delete a Twitter/X draft
+- Example: *"Delete that old Twitter draft about the conference"*
+
+**`twitter_update_post`** - Edit a scheduled or pending Twitter/X post
+- Only works on posts with status scheduled, pending_approval, changes_requested, or rejected
+- Example: *"Move my scheduled tweet to 3 PM instead"*
+
+**`twitter_delete_post`** - Delete a Twitter/X post
+- Deletes from X too if already published; refunds credits if it was still scheduled
+- Example: *"Delete that tweet I posted this morning"*
+
+**`twitter_get_analytics`** - View aggregate Twitter/X analytics
+- Engagement metrics and follower trends
+- Example: *"How's my Twitter engagement trending?"*
+
+### 🔴 Reddit
+
+**`search_reddit`** - Search Reddit for relevant conversations (Premium)
+- Keyword search across Reddit threads/posts, returns title, subreddit, upvotes, comment count, and a post ID
+- Pass the post ID to `reply_to_reddit` to engage with it
+- Example: *"Search Reddit for conversations about AI writing tools"*
+
+**`reply_to_reddit`** - Reply to a Reddit thread/post
+- Posts the comment immediately, or submits it for teammate approval if your workspace requires it
+- Requires your Reddit account connected in Reepl settings first
+- Example: *"Reply to that Reddit thread with a helpful, non-promotional answer"*
+
+### 📊 Analytics
+
+**`get_post_analytics`** - View engagement for one LinkedIn post
+- Reactions, comments, and reposts, refreshed live when stale (impressions not available)
+- Example: *"How's my post about AI trends performing?"*
+
+**`get_linkedin_analytics`** - View aggregate LinkedIn analytics
+- Total engagement and performance trends across all your posts
+- Example: *"Give me an overview of my LinkedIn performance this month"*
+
+### 💡 Ideas & Signals
+
+**`get_ideas`** - View your content ideas board
+- Ideas generated from your posts, saved posts, or connected docs (Notion, Google Docs)
+- Filter by status (new/saved/used) or source
+- Example: *"What content ideas do I have saved?"*
+
+**`generate_ideas`** - AI-generate new content ideas
+- Derived from your published posts, saved posts, or linked documents — costs credits
+- Example: *"Generate 5 new post ideas from my recent published content"*
+
+**`get_signals_inbox`** - View your personalized content signal feed
+- Trending Reddit posts, YouTube videos, RSS articles, and topics matching your interests
+- Example: *"What's trending in my signals feed today?"*
+
+### 📢 Feedback
+
+**`submit_feedback`** - Send feedback to Reepl
+- Report bugs, request features, or share ideas without leaving your AI client
+- Example: *"Tell Reepl I'd love a dark mode option"*
 
 ## Example Use Cases
 

@@ -165,9 +165,19 @@ If installation issues persist:
 Once installed, you'll have access to these tools:
 
 **Draft Management**: create_draft, get_drafts, update_draft, delete_draft
-**Publishing**: publish_to_linkedin, schedule_post, update_scheduled_post, get_published_posts
+**Publishing & Scheduling**: publish_to_linkedin, schedule_post, update_scheduled_post, get_published_posts, get_scheduled_posts, delete_scheduled_post, publish_now, schedule_draft
+**LinkedIn Engagement**: read_linkedin_post, add_comment_to_post
 **User Data**: get_user_profile
-**Contacts**: get_contacts, get_lists
+**Voice & Writing Style**: get_voice_profile, update_voice_profile, get_writing_style, train_writing_style
+**Workspace & Team**: list_workspaces, set_default_workspace, get_workspace_context, get_audience_profiles, list_workspace_members, get_workspace_posts
+**Contacts**: get_contacts, get_lists, get_list_contacts, add_contact_to_list
 **Content**: get_collections, get_saved_posts, get_templates
+**Carousels**: generate_carousel_content, list_carousel_drafts, get_carousel_draft, create_carousel_draft, update_carousel_draft, delete_carousel_draft, list_carousel_templates
+**Image Generation**: generate_image
+**Twitter/X**: twitter_create_post, twitter_get_posts, twitter_get_drafts, twitter_create_draft, twitter_update_draft, twitter_delete_draft, twitter_update_post, twitter_delete_post, twitter_get_analytics
+**Reddit**: search_reddit, reply_to_reddit
+**Analytics**: get_post_analytics, get_linkedin_analytics
+**Ideas & Signals**: get_ideas, generate_ideas, get_signals_inbox
+**Feedback**: submit_feedback
 
-Use these to help users create, schedule, and manage LinkedIn content through natural conversation.
+Use these to help users create, schedule, and manage LinkedIn, Twitter/X, and Reddit content, carousels, and more through natural conversation.
