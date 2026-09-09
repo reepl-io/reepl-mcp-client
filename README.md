@@ -308,10 +308,15 @@ Once connected, Claude has access to these Reepl tools:
 
 ### 🖼️ Image Generation
 
-**`generate_image`** - Generate an AI image for a post
-- Uses your linked Gemini API key; returns a URL usable in `publish_to_linkedin` or `schedule_post`
+**`generate_image`** - Start generating an AI image for a post
+- Uses your linked Gemini API key
+- **Asynchronous**: this starts the job and returns straight away. Poll `check_image_generation_status` until it finishes, then use the returned URL in `publish_to_linkedin` or `schedule_post`
 - Always show the image for approval before publishing
 - Example: *"Generate an image for this post about remote work"*
+
+**`check_image_generation_status`** - Check whether a `generate_image` job has finished
+- Returns the job's status and, once complete, the image URL
+- Example: *"Is that image ready yet?"*
 
 ### 🐦 Twitter/X
 
@@ -355,6 +360,10 @@ Once connected, Claude has access to these Reepl tools:
 - Keyword search across Reddit threads/posts, returns title, subreddit, upvotes, comment count, and a post ID
 - Pass the post ID to `reply_to_reddit` to engage with it
 - Example: *"Search Reddit for conversations about AI writing tools"*
+
+**`get_reddit_thread_comments`** - Read the comments on a Reddit thread
+- Use it before replying: a reply that answers the title without engaging with the discussion under it reads as spam to most subreddits
+- Example: *"What are people actually saying in that thread?"*
 
 **`reply_to_reddit`** - Reply to a Reddit thread/post
 - Posts the comment immediately, or submits it for teammate approval if your workspace requires it
@@ -469,6 +478,20 @@ New to Reepl? Here's how to get the most value:
 - 🔧 **MCP Setup**: [app.reepl.io/mcp-setup](https://app.reepl.io/mcp-setup)
 - 📚 **Documentation**: [docs.reepl.io](https://docs.reepl.io)
 - 💬 **Support**: support@reepl.io
+
+## Prompts
+
+Alongside its tools, the server exposes one MCP **prompt**:
+
+**`carousel_guidelines`** - Carousel content and styling rules
+- Load it at the start of a carousel session so generated slides fit Reepl's format
+- Example: *"Use the Reepl carousel guidelines, then draft me a 7-slide carousel on onboarding"*
+
+## Documentation
+
+- Setup and troubleshooting: [help.reepl.io/integrations/mcp](https://help.reepl.io/integrations/mcp)
+- Full tool reference: [help.reepl.io/guides/mcp-connectors](https://help.reepl.io/guides/mcp-connectors)
+- Reepl REST API (a separate surface with its own credentials): [developers.reepl.io](https://developers.reepl.io)
 
 ## Privacy & Security
 
