@@ -173,11 +173,16 @@ Once installed, you'll have access to these tools:
 **Contacts**: get_contacts, get_lists, get_list_contacts, add_contact_to_list
 **Content**: get_collections, get_saved_posts, get_templates
 **Carousels**: generate_carousel_content, list_carousel_drafts, get_carousel_draft, create_carousel_draft, update_carousel_draft, delete_carousel_draft, list_carousel_templates
-**Image Generation**: generate_image
+**Image Generation**: generate_image, check_image_generation_status (generation is asynchronous: start with generate_image, then poll check_image_generation_status for the URL)
 **Twitter/X**: twitter_create_post, twitter_get_posts, twitter_get_drafts, twitter_create_draft, twitter_update_draft, twitter_delete_draft, twitter_update_post, twitter_delete_post, twitter_get_analytics
-**Reddit**: search_reddit, reply_to_reddit
+**Reddit**: search_reddit, get_reddit_thread_comments, reply_to_reddit
 **Analytics**: get_post_analytics, get_linkedin_analytics
 **Ideas & Signals**: get_ideas, generate_ideas, get_signals_inbox
 **Feedback**: submit_feedback
 
+A `carousel_guidelines` prompt is also exposed. Load it at the start of a carousel session so generated slides fit Reepl's format.
+
 Use these to help users create, schedule, and manage LinkedIn, Twitter/X, and Reddit content, carousels, and more through natural conversation.
+
+Full documentation: https://help.reepl.io/integrations/mcp
+Tool reference: https://help.reepl.io/guides/mcp-connectors
